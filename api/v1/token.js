@@ -24,7 +24,8 @@ module.exports = async (req, res) => {
             refresh_token: token.refresh,
             token_type: "Bearer",
             scope: token.scopes.join(" "),
-            expires_in: config.tokenLifespan / 1000
+            expires_in: config.tokenLifespan / 1000,
+            user: token.user
         });
 
     } else if (req.body.grant_type === "refresh_token") {
@@ -45,7 +46,8 @@ module.exports = async (req, res) => {
             refresh_token: token.refresh,
             token_type: "Bearer",
             scope: token.scopes.join(" "),
-            expires_in: config.tokenLifespan / 1000
+            expires_in: config.tokenLifespan / 1000,
+            user: token.user
         });
     } else return res.status(400).json({err: "invalidGrantType"});
 };
