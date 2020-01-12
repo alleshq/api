@@ -6,6 +6,7 @@ app.listen(8081, () => {
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use((err, req, res, next) => {
     res.status(500).json({err: "internalError"});
