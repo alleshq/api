@@ -2,7 +2,7 @@ const config = require("../../config");
 
 module.exports = (req, res) => {
     res.json({
-        user: req.token.user,
+        user: req.token.user._id,
         application: req.token.application,
         scopes: req.token.scopes,
         createdAt: req.token.createdAt,
