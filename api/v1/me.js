@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     };
 
     //Basic Profile Information
-    if (req.token.scopes.includes("basicProfile")) {
+    if (req.token.scopes.includes("basic-profile")) {
         responseData.username = req.token.user.username;
         responseData.name = req.token.user.name;
         responseData.nickname = req.token.user.nickname;
