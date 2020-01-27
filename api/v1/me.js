@@ -14,10 +14,12 @@ module.exports = async (req, res) => {
 
     //Team List
     if (req.token.scopes.includes("team-list")) {
-        var query = {};
-        query[`users.${req.token.user._id}`] = {$exists: true};
         responseData.teams = (
-            await db("teams").find(query).toArray()
+            await db("teams").find({
+                [`users.${req.token.user._id}`]: {
+                    $exists: true
+                }
+            }).toArray()
         ).map(team => ({
             id: team._id,
             teamid: team.teamid,
