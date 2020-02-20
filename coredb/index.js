@@ -52,8 +52,8 @@ const User = sequelize.define("user", {
     timestamps: false
 });
 
-//Follower
-const Follower = sequelize.define("follower", {
+//Follower Relations
+const FollowerRelation = sequelize.define("followerRelation", {
     followerId: {
         type: Sequelize.UUID,
         references: {
@@ -72,16 +72,20 @@ const Follower = sequelize.define("follower", {
     timestamps: false
 });
 
-//Follower Relations
 User.belongsToMany(User, {
     as: "followers",
-    through: Follower,
+    through: FollowerRelation,
     foreignKey: "followingId",
     otherKey: "followerId"
+});
+User.belongsToMany(User, {
+    as: "following",
+    through: FollowerRelation,
+    foreignKey: "followerId",
+    otherKey: "followingId"
 });
 
 //Export Stuff
 Object.assign(sequelize, {
-    User,
-    Follower
+    User
 });

@@ -22,7 +22,7 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
     const users = await db.User.findAll({
-        include: "followers"
+        include: ["followers", "following"]
     });
     res.json(users);
 });
