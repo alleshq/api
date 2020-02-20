@@ -47,6 +47,10 @@ const User = sequelize.define("user", {
     },
     createdAt: {
         type: Sequelize.DATE
+    },
+    plus: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
     }
 }, {
     timestamps: false
