@@ -3,8 +3,11 @@ const app = express();
 
 const db = require("./coredb");
 db.sync().then(() => {
-    app.listen(8081, () => {
+    app.listen(8081, async () => {
         console.log("Listening on Express");
+        const a = await db.User.findOne({where:{username: "archie"}});
+        const w = await db.User.findOne({where:{username: "will"}});
+        //a.addFollower(w);
     });
 });
 
@@ -18,7 +21,9 @@ app.use((err, req, res, next) => {
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
-    const users = await db.User.findAll();
+    const users = await db.User.findAll({
+        include: "followers"
+    });
     res.json(users);
 });
 //app.use("/v1", require("./api/v1/_"));
