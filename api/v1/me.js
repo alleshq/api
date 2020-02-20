@@ -1,4 +1,4 @@
-const db = require("../../util/mongo");
+const db = require("../../coredb");
 
 module.exports = async (req, res) => {
     const responseData = {

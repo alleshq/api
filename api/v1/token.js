@@ -1,4 +1,4 @@
-const db = require("../../util/mongo");
+const db = require("../../coredb");
 const config = require("../../config");
 const randomString = require("randomstring").generate;
 const uuid = require("uuid/v4");
