@@ -34,4 +34,18 @@ module.exports = db => {
     }, {
         timestamps: false
     });
+
+    //Team/User Association
+    db.User.belongsToMany(db.Team, {
+        as: "teams",
+        through: db.TeamMember,
+        foreignKey: "userId",
+        otherKey: "teamId"
+    });
+    db.Team.belongsToMany(db.User, {
+        as: "members",
+        through: db.TeamMember,
+        foreignKey: "teamId",
+        otherKey: "userId"
+    });
 };
