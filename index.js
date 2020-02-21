@@ -1,13 +1,10 @@
 const express = require("express");
 const app = express();
 
-const db = require("./coredb");
+const db = require("./util/db");
 db.sync().then(() => {
     app.listen(8081, async () => {
         console.log("Listening on Express");
-        const a = await db.User.findOne({where:{username: "archie"}});
-        const w = await db.User.findOne({where:{username: "will"}});
-        //a.addFollower(w);
     });
 });
 
