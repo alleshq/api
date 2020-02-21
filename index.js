@@ -2,9 +2,27 @@ const express = require("express");
 const app = express();
 
 const db = require("./util/db");
-db.sync().then(() => {
+db.sync({force: true}).then(() => {
     app.listen(8081, async () => {
         console.log("Listening on Express");
+
+        const archie = await db.User.create({
+            id: require("uuid/v4")(),
+            username: "archie",
+            password: "hash",
+            name: "Archie Baer",
+            nickname: "Archie",
+            about: "This is a test",
+            createdAt: new Date()
+        });
+
+        const team = await db.Team.create({
+            id: require("uuid/v4")(),
+            name: "Alles",
+            slug: "alles"
+        });
+
+        archie.addTeam(team);
     });
 });
 
@@ -19,7 +37,7 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
     const users = await db.User.findAll({
-        include: ["followers", "following"]
+        include: ["followers", "following", "teams"]
     });
     res.json(users);
 });

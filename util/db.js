@@ -5,7 +5,8 @@ const models = require("../coredb-models");
 //Create Instance
 const sequelize = new Sequelize(credentials.db.name, credentials.db.username, credentials.db.password, {
     host: credentials.db.host,
-    dialect: "mariadb"
+    dialect: "mariadb",
+    logging: false
 });
 models(sequelize);
 module.exports = sequelize;
