@@ -16,13 +16,12 @@ db.sync({force: true}).then(() => {
             createdAt: new Date()
         });
 
-        const team = await db.Team.create({
+        const session = await db.Session.create({
             id: require("uuid/v4")(),
-            name: "Alles",
-            slug: "alles"
+            address: "abc"
         });
 
-        archie.addTeam(team);
+        archie.addSession(session);
     });
 });
 
@@ -37,7 +36,7 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
     const users = await db.User.findAll({
-        include: ["followers", "following", "teams"]
+        include: ["sessions"]
     });
     res.json(users);
 });
