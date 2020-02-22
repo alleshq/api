@@ -2,20 +2,6 @@ const {DataTypes} = require("sequelize");
 
 module.exports = db => {
     db.TeamMember = db.define("teamMember", {
-        teamId: {
-            type: DataTypes.UUID,
-            references: {
-                model: db.Team,
-                key: "id"
-            }
-        },
-        userId: {
-            type: DataTypes.UUID,
-            references: {
-                model: db.User,
-                key: "id"
-            }
-        },
         admin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
