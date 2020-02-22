@@ -8,13 +8,12 @@ module.exports = db => {
         },
         roles: {
             type: DataTypes.STRING,
-            defaultValue: "",
+            defaultValue: "[]",
             get() {
-                const roles = this.getDataValue("roles").split(";");
-                return roles.length === 1 && roles[0].length === 0 ? [] : roles;
+                return JSON.parse(this.getDataValue("roles"));
             },
             set(value) {
-                this.setDataValue("roles", value.join(";"));
+                this.setDataValue("roles", JSON.stringify(value));
             }
         }
     }, {

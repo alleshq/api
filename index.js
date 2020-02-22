@@ -6,22 +6,21 @@ db.sync({force: true}).then(() => {
     app.listen(8081, async () => {
         console.log("Listening on Express");
 
-        const archie = await db.User.create({
+        const alles = await db.Team.create({
             id: require("uuid/v4")(),
-            username: "archie",
-            password: "hash",
-            name: "Archie Baer",
-            nickname: "Archie",
-            about: "This is a test",
-            createdAt: new Date()
+            name: "Alles",
+            slug: "alles"
         });
 
-        const session = await db.Session.create({
+        const shootydot = await db.Application.create({
             id: require("uuid/v4")(),
-            address: "abc"
+            secret: "test",
+            name: "Shootydot",
+            description: "Play with your friends or whatever",
+            callbackUrls: ["https://shootydot.alles.cx/auth"]
         });
 
-        archie.addSession(session);
+        alles.addApplication(shootydot);
     });
 });
 
@@ -35,10 +34,9 @@ app.use((err, req, res, next) => {
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
-    const users = await db.User.findAll({
-        include: ["sessions"]
-    });
-    res.json(users);
+    res.json(await db.Application.findAll({
+        include: ["team"]
+    }));
 });
 //app.use("/v1", require("./api/v1/_"));
 
