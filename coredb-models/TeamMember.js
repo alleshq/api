@@ -4,11 +4,13 @@ module.exports = db => {
     db.TeamMember = db.define("teamMember", {
         admin: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         roles: {
             type: DataTypes.STRING,
             defaultValue: "[]",
+            allowNull: false,
             get() {
                 return JSON.parse(this.getDataValue("roles"));
             },

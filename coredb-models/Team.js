@@ -7,22 +7,27 @@ module.exports = db => {
             type: DataTypes.UUID
         },
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         slug: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         verified: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         developer: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         plan: {
             type: DataTypes.ENUM("free", "basic", "premium", "ultimate"),
-            defaultValue: "free"
+            defaultValue: "free",
+            allowNull: false
         }
     }, {
         timestamps: false

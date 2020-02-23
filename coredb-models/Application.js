@@ -4,24 +4,30 @@ module.exports = db => {
     db.Application = db.define("application", {
         id: {
             primaryKey: true,
-            type: DataTypes.UUID
+            type: DataTypes.UUID,
+            allowNull: false
         },
         secret: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         description: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         firstParty: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         callbackUrls: {
             type: DataTypes.STRING,
             defaultValue: "[]",
+            allowNull: false,
             get() {
                 return JSON.parse(this.getDataValue("callbackUrls"));
             },

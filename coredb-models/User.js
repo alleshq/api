@@ -7,42 +7,53 @@ module.exports = db => {
             type: DataTypes.UUID
         },
         username: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         password: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         usesLegacyPassword: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         nickname: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         reputation: {
             type: DataTypes.INTEGER,
-            defaultValue: 0
+            defaultValue: 0,
+            allowNull: false
         },
         rubies: {
             type: DataTypes.INTEGER,
-            defaultValue: 0
+            defaultValue: 0,
+            allowNull: false
         },
         private: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         },
         about: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         createdAt: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            allowNull: false
         },
         plus: {
             type: DataTypes.BOOLEAN,
-            defaultValue: 0
+            defaultValue: 0,
+            allowNull: false
         }
     }, {
         timestamps: false
