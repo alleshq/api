@@ -15,14 +15,16 @@ db.sync({force: true}).then(() => {
             about: "Hi! I'm Archie."
         });
 
-        const hackers = await db.Group.create({
+        const archiebaer = await db.User.create({
             id: require("uuid/v4")(),
-            name: "Hackers",
-            description: "A community for hackers"
+            username: "archiebaer",
+            password: "hash",
+            name: "Archie Baer #2",
+            nickname: "Archie",
+            about: "Hi! I'm also Archie."
         });
 
-        hackers.addMember(archie);
-        hackers.addBooster(archie);
+        archiebaer.setPrimary(archie);
     });
 });
 
@@ -37,7 +39,7 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
     res.json(await db.User.findAll({
-        include: ["boostedGroup", "groups"]
+        include: ["primary", "secondaries"]
     }));
 });
 //app.use("/v1", require("./api/v1/_"));
