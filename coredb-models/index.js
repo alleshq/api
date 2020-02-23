@@ -8,6 +8,8 @@ module.exports = db => {
     require("./Team")(db);
     require("./TeamMember")(db);
     require("./Application")(db);
+    require("./AuthCode")(db);
+    require("./AuthToken")(db);
 
     return db;
 };

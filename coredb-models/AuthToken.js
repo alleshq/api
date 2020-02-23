@@ -1,45 +1,44 @@
 const {DataTypes} = require("sequelize");
 
 module.exports = db => {
-    db.Application = db.define("application", {
+    db.AuthToken = db.define("authToken", {
         id: {
             primaryKey: true,
-            type: DataTypes.UUID,
-            allowNull: false
+            type: DataTypes.UUID
         },
-        secret: {
+        access: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        name: {
+        refresh: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        firstParty: {
+        expired: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
         },
-        callbackUrls: {
+        scopes: {
             type: DataTypes.STRING,
             defaultValue: "[]",
             allowNull: false,
             get() {
-                return JSON.parse(this.getDataValue("callbackUrls"));
+                return JSON.parse(this.getDataValue("scopes"));
             },
             set(value) {
-                this.setDataValue("callbackUrls", JSON.stringify(value));
+                this.setDataValue("scopes", JSON.stringify(value));
             }
         }
     }, {
         updatedAt: false
     });
 
-    //Team Association
-    db.Team.hasMany(db.Application);
-    db.Application.belongsTo(db.Team);
+    //User Association
+    db.User.hasMany(db.AuthToken);
+    db.AuthToken.belongsTo(db.User);
+
+    //Application Association
+    db.Application.hasMany(db.AuthToken);
+    db.AuthToken.belongsTo(db.Application);
 };

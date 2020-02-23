@@ -15,16 +15,29 @@ db.sync({force: true}).then(() => {
             about: "Hi! I'm Archie."
         });
 
-        const archiebaer = await db.User.create({
+        const shootydot = await db.Application.create({
             id: require("uuid/v4")(),
-            username: "archiebaer",
-            password: "hash",
-            name: "Archie Baer #2",
-            nickname: "Archie",
-            about: "Hi! I'm also Archie."
+            secret: "test",
+            name: "Shootydot",
+            description: "pew pew"
         });
 
-        archiebaer.setPrimary(archie);
+        const code = await db.AuthCode.create({
+            id: require("uuid/v4")(),
+            code: "abc",
+            redirectUri: "https://abaer.dev"
+        });
+
+        const token = await db.AuthToken.create({
+            id: require("uuid/v4")(),
+            access: "def",
+            refresh: "hij"
+        });
+
+        code.setUser(archie);
+        code.setApplication(shootydot);
+        token.setUser(archie);
+        token.setApplication(shootydot);
     });
 });
 
@@ -38,8 +51,8 @@ app.use((err, req, res, next) => {
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
-    res.json(await db.User.findAll({
-        include: ["primary", "secondaries"]
+    res.json(await db.AuthToken.findAll({
+        include: ["user", "application"]
     }));
 });
 //app.use("/v1", require("./api/v1/_"));
