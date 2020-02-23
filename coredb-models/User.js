@@ -46,16 +46,12 @@ module.exports = db => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false
-        },
         plus: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
         }
     }, {
-        timestamps: false
+        updatedAt: false
     });
 };

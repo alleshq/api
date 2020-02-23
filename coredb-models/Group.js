@@ -1,35 +1,35 @@
 const {DataTypes} = require("sequelize");
 
 module.exports = db => {
-    db.Team = db.define("team", {
+    db.Group = db.define("group", {
         id: {
             primaryKey: true,
-            type: DataTypes.UUID
+            type: DataTypes.UUID,
+            allowNull: false
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        slug: {
+        description: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        verified: {
+        private: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-            allowNull: false
-        },
-        developer: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false
-        },
-        plan: {
-            type: DataTypes.ENUM("free", "basic", "premium", "ultimate"),
-            defaultValue: "free",
             allowNull: false
         }
     }, {
         updatedAt: false
+    });
+
+    //Booster Association
+    db.Group.hasMany(db.User, {
+        foreignKey: "boostedGroupId",
+        as: "boosters"
+    });
+    db.User.belongsTo(db.Group, {
+        as: "boostedGroup"
     });
 };

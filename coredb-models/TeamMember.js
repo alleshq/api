@@ -19,7 +19,7 @@ module.exports = db => {
             }
         }
     }, {
-        timestamps: false
+        updatedAt: false
     });
 
     //Team/User Association
