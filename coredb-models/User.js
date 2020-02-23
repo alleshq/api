@@ -52,7 +52,7 @@ module.exports = db => {
         },
         plus: {
             type: DataTypes.BOOLEAN,
-            defaultValue: 0,
+            defaultValue: false,
             allowNull: false
         }
     }, {
