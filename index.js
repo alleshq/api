@@ -7,7 +7,7 @@ db.sync({force: true}).then(() => {
         console.log("Listening on Express");
 
         const archie = await db.User.create({
-            id: require("uuid/v4")(),
+            id: "archie",
             username: "archie",
             password: "hash",
             name: "Archie Baer",
@@ -16,20 +16,20 @@ db.sync({force: true}).then(() => {
         });
 
         const shootydot = await db.Application.create({
-            id: require("uuid/v4")(),
+            id: "shootydot",
             secret: "test",
             name: "Shootydot",
             description: "pew pew"
         });
 
         const code = await db.AuthCode.create({
-            id: require("uuid/v4")(),
+            id: "code",
             code: "abc",
             redirectUri: "https://abaer.dev"
         });
 
         const token = await db.AuthToken.create({
-            id: require("uuid/v4")(),
+            id: "token",
             access: "def",
             refresh: "hij"
         });
@@ -51,11 +51,11 @@ app.use((err, req, res, next) => {
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.get("/test", async (req, res) =>  {
-    res.json(await db.AuthToken.findAll({
-        include: ["user", "application"]
+    res.json(await db.Application.findAll({
+        include: ["authCodes", "authTokens"]
     }));
 });
-//app.use("/v1", require("./api/v1/_"));
+app.use("/v1", require("./api/v1/_"));
 
 app.use((req, res) => {
     res.status(404).json({err: "invalidRoute"});

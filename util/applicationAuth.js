@@ -1,4 +1,4 @@
-const db = require("../coredb");
+const db = require("../util/db");
 
 module.exports = async (req, res, next) => {
 
@@ -27,7 +27,11 @@ module.exports = async (req, res, next) => {
     } else return res.status(401).json({err: "badAuthorization"});
 
     //Get Application
-    const application = await db("applications").findOne({_id: applicationCredentials.id});
+    const application = (await db.Application.findOne({
+        where: {
+            id: applicationCredentials.id
+        }
+    }));
     if (!application) return res.status(401).json({err: "invalidApplicationCredentials"});
     if (application.secret !== applicationCredentials.secret) return res.status(401).json({err: "invalidApplicationCredentials"});
     req.application = application;

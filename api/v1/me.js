@@ -1,4 +1,4 @@
-const db = require("../../coredb");
+const db = require("../../util/db");
 
 module.exports = async (req, res) => {
     const responseData = {
