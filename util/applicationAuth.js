@@ -27,11 +27,11 @@ module.exports = async (req, res, next) => {
     } else return res.status(401).json({err: "badAuthorization"});
 
     //Get Application
-    const application = (await db.Application.findOne({
+    const application = await db.Application.findOne({
         where: {
             id: applicationCredentials.id
         }
-    }));
+    });
     if (!application) return res.status(401).json({err: "invalidApplicationCredentials"});
     if (application.secret !== applicationCredentials.secret) return res.status(401).json({err: "invalidApplicationCredentials"});
     req.application = application;

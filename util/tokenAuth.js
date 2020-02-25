@@ -8,14 +8,14 @@ module.exports = async (req, res, next) => {
     if (authHeader.split(" ").length !== 2 || !authHeader.startsWith("Bearer ")) return res.status(401).json({err: "badAuthorization"});
 
     //Get Token
-    const token = await db("authTokens").findOne({access: authHeader.split(" ")[1]});
+    const token = await db.AuthToken.findOne({
+        where: {
+            access: authHeader.split(" ")[1]
+        },
+        include: ["user"]
+    });
     if (!token) return res.status(401).json({err: "invalidToken"});
 
-    //Get User
-    const user = await db("accounts").findOne({_id: token.user});
-    if (!user) return res.status(401).json({err: "invalidToken"});
-
-    token.user = user;
     req.token = token;
     next();
 

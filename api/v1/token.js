@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
         if (!oldToken) return res.status(400).json({err: "tokenDoesNotExist"});
         if (oldToken.applicationId !== req.application.id) return res.status(400).json({err: "tokenNotForApplication"});
         if (oldToken.expired) return res.status(400).json({err: "refreshTokenExpired"});
-        //if (new Date().getTime() < oldToken.createdAt.getTime() + config.tokenLifespan) return res.status(400).json({err: "accessTokenNotExpired"});
+        if (new Date().getTime() < oldToken.createdAt.getTime() + config.tokenLifespan) return res.status(400).json({err: "accessTokenNotExpired"});
 
         //Create new token
         oldToken.update({expired: true});

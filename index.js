@@ -15,6 +15,12 @@ db.sync({force: true}).then(() => {
             about: "Hi! I'm Archie."
         });
 
+        const alles = await db.Team.create({
+            id: "alles",
+            name: "Alles",
+            slug: "alles"
+        });
+
         const shootydot = await db.Application.create({
             id: "shootydot",
             secret: "test",
@@ -31,9 +37,12 @@ db.sync({force: true}).then(() => {
         const token = await db.AuthToken.create({
             id: "token",
             access: "def",
-            refresh: "hij"
+            refresh: "hij",
+            scopes: ["basic-profile", "team-list"]
         });
 
+        alles.addMember(archie);
+        shootydot.setTeam(alles);
         code.setUser(archie);
         code.setApplication(shootydot);
         token.setUser(archie);

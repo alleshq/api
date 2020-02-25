@@ -2,7 +2,7 @@ const db = require("../../util/db");
 
 module.exports = async (req, res) => {
     const responseData = {
-        id: req.token.user._id
+        id: req.token.user.id
     };
 
     //Basic Profile Information
@@ -14,15 +14,9 @@ module.exports = async (req, res) => {
 
     //Team List
     if (req.token.scopes.includes("team-list")) {
-        responseData.teams = (
-            await db("teams").find({
-                [`users.${req.token.user._id}`]: {
-                    $exists: true
-                }
-            }).toArray()
-        ).map(team => ({
-            id: team._id,
-            teamid: team.teamid,
+        responseData.teams = (await req.token.user.getTeams()).map(team => ({
+            id: team.id,
+            slug: team.slug,
             name: team.name
         }));
     }
