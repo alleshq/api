@@ -6,7 +6,10 @@ const models = require("../coredb-models");
 const sequelize = new Sequelize(credentials.db.name, credentials.db.username, credentials.db.password, {
     host: credentials.db.host,
     dialect: "mariadb",
-    logging: false
+    logging: false,
+    dialectOptions: {
+        timezone: "Etc/GMT0"
+    }
 });
 models(sequelize);
 module.exports = sequelize;
