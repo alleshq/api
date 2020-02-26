@@ -1,5 +1,3 @@
-const db = require("../../util/db");
-
 module.exports = async (req, res) => {
     const responseData = {
         id: req.token.user.id
