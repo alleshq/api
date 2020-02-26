@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
         if (code.redirectUri !== req.body.redirect_uri) return res.status(400).json({err: "incorrectRedirectUri"});
 
         //Create Token
-        code.update({used: true});
+        await code.update({used: true});
         const token = await newToken(req.application, code.user, code.scopes);
         res.json({
             access_token: token.access,
@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
         if (new Date().getTime() < oldToken.createdAt.getTime() + config.tokenLifespan) return res.status(400).json({err: "accessTokenNotExpired"});
 
         //Create new token
-        oldToken.update({expired: true});
+        await oldToken.update({expired: true});
         const token = await newToken(req.application, oldToken.user, oldToken.scopes);
         res.json({
             access_token: token.access,
