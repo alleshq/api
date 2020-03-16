@@ -1,4 +1,4 @@
 {
-    "codeLifespan": 120000,
-    "tokenLifespan": 3600000
+	"codeLifespan": 120000,
+	"tokenLifespan": 3600000
 }

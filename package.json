@@ -1,11 +1,15 @@
 {
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "coredb-models": "https://github.com/alleshq/coredb-models",
-    "express": "^4.17.1",
-    "mariadb": "^2.2.0",
-    "randomstring": "^1.1.5",
-    "sequelize": "^5.21.4",
-    "uuid": "^3.4.0"
-  }
+	"scripts": {
+		"format": "prettier --write \"**/*.+(js|jsx|json)\""
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"coredb-models": "https://github.com/alleshq/coredb-models",
+		"express": "^4.17.1",
+		"mariadb": "^2.2.0",
+		"prettier": "^1.19.1",
+		"randomstring": "^1.1.5",
+		"sequelize": "^5.21.4",
+		"uuid": "^3.4.0"
+	}
 }
