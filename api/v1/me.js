@@ -1,17 +1,13 @@
 module.exports = async (req, res) => {
 	const responseData = {
-		id: req.token.user.id
+		id: req.token.user.id,
+		username: req.token.username,
+		name: req.token.name,
+		nickname: req.token.nickname
 	};
 
-	//Basic Profile Information
-	if (req.token.scopes.includes("basic-profile")) {
-		responseData.username = req.token.user.username;
-		responseData.name = req.token.user.name;
-		responseData.nickname = req.token.user.nickname;
-	}
-
 	//Team List
-	if (req.token.scopes.includes("team-list")) {
+	if (req.token.scopes.includes("teams")) {
 		responseData.teams = (await req.token.user.getTeams()).map(team => ({
 			id: team.id,
 			slug: team.slug,
