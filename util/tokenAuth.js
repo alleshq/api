@@ -12,11 +12,11 @@ module.exports = async (req, res, next) => {
 	const token = await db.AuthToken.findOne({
 		where: {
 			access: authHeader.split(" ")[1]
-		},
-		include: ["user"]
+		}
 	});
 	if (!token) return res.status(401).json({err: "invalidToken"});
 
 	req.token = token;
+	req.user = await token.getUser();
 	next();
 };
