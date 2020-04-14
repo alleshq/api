@@ -2,8 +2,9 @@ import {generate as randomString} from "randomstring";
 import {v4 as uuid} from "uuid";
 import db from "../../util/db";
 import config from "../../../config.json";
+import {Request, Response} from "express";
 
-export default async (req, res) => {
+export default async (req: Request, res: Response) => {
 	if (typeof req.body.grant_type !== "string")
 		return res.status(400).json({err: "invalidBodyParams"});
 

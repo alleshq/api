@@ -1,6 +1,7 @@
 import config from "../../../config.json";
+import {Request, Response} from "express";
 
-export default (req, res) => {
+export default (req: Request, res: Response) => {
 	res.json({
 		user: req.user.id,
 		application: req.token.application,

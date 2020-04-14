@@ -1,6 +1,7 @@
 import db from "../util/db";
+import {Request, NextFunction, Response} from "express";
 
-export default async (req, res, next) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
 	//Get Credentials
 	var applicationCredentials;
 	const authHeader = req.headers.authorization;

@@ -1,6 +1,7 @@
 import db from "../util/db";
+import {Request, Response, NextFunction} from "express";
 
-export default async (req, res, next) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
 	//Parse Header
 	const authHeader = req.headers.authorization;
 	if (typeof authHeader !== "string")

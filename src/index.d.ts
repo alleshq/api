@@ -5,6 +5,7 @@ declare global {
 		interface Request {
 			user?: any;
 			token?: any;
+			application?: any;
 		}
 	}
 }
