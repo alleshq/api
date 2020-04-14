@@ -1,3 +1,5 @@
+import {Token} from "./types";
+
 export {};
 
 declare global {
