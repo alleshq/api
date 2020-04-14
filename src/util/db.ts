@@ -1,18 +1,18 @@
 import {Sequelize} from "sequelize";
 import models from "coredb-models";
-import credentials from "../../credentials.json";
+import {TIMEZONE} from "../const";
 
 //Create Instance
 const sequelize: any = new Sequelize(
-	credentials.db.name,
-	credentials.db.username,
-	credentials.db.password,
+	process.env.DB_NAME!,
+	process.env.DB_USERNAME!,
+	process.env.DB_PASSWORD,
 	{
-		host: credentials.db.host,
+		host: process.env.DB_HOST,
 		dialect: "mariadb",
 		logging: false,
 		dialectOptions: {
-			timezone: "Etc/GMT0"
+			timezone: TIMEZONE
 		}
 	}
 );

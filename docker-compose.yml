@@ -4,5 +4,10 @@ services:
   main:
     build: .
     restart: always
+    environment:
+      - DB_NAME=example
+      - DB_HOST=example.com
+      - DB_USERNAME=example
+      - DB_PASSWORD=foobar
     ports:
       - 8003:8081
