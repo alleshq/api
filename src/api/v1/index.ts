@@ -1,6 +1,6 @@
-import express from "express"
-import applicationAuth from "../../util/applicationAuth"
-import tokenAuth from "../../util/tokenAuth"
+import express from "express";
+import applicationAuth from "../../util/applicationAuth";
+import tokenAuth from "../../util/tokenAuth";
 
 const router = express.Router();
 router.post("/token", applicationAuth, require("./token"));

@@ -1,8 +1,8 @@
 /// <reference path="./index.d.ts" />
-import express, { Response, NextFunction, Request } from "express";
+import express, {Response, NextFunction, Request} from "express";
 import bodyParser from "body-parser";
 import db from "./util/db";
-import v1 from "./api/v1"
+import v1 from "./api/v1";
 
 const app = express();
 
