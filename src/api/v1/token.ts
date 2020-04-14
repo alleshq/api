@@ -1,8 +1,8 @@
+import {Request, Response} from "express";
 import {generate as randomString} from "randomstring";
 import {v4 as uuid} from "uuid";
 import db from "../../util/db";
 import config from "../../../config.json";
-import {Request, Response} from "express";
 
 export default async (req: Request, res: Response) => {
 	if (typeof req.body.grant_type !== "string")
@@ -36,7 +36,7 @@ export default async (req: Request, res: Response) => {
 		//Create Token
 		await code.update({used: true});
 		const token = await newToken(req.application, code.user, code.scopes);
-		res.json({
+		return res.json({
 			access_token: token.access,
 			refresh_token: token.refresh,
 			token_type: "Bearer",
@@ -44,7 +44,9 @@ export default async (req: Request, res: Response) => {
 			expires_in: config.tokenLifespan / 1000,
 			user: token.userId
 		});
-	} else if (req.body.grant_type === "refresh_token") {
+	}
+
+	if (req.body.grant_type === "refresh_token") {
 		if (typeof req.body.refresh_token !== "string")
 			return res.status(400).json({err: "invalidBodyParams"});
 
@@ -73,7 +75,7 @@ export default async (req: Request, res: Response) => {
 			oldToken.user,
 			oldToken.scopes
 		);
-		res.json({
+		return res.json({
 			access_token: token.access,
 			refresh_token: token.refresh,
 			token_type: "Bearer",
@@ -81,10 +83,12 @@ export default async (req: Request, res: Response) => {
 			expires_in: config.tokenLifespan / 1000,
 			user: token.userId
 		});
-	} else return res.status(400).json({err: "invalidGrantType"});
+	}
+
+	return res.status(400).json({err: "invalidGrantType"});
 };
 
-const newToken = async (application, user, scopes) => {
+const newToken = async (application, user, scopes: string[]) => {
 	const token = await db.AuthToken.create({
 		id: uuid(),
 		scopes,
