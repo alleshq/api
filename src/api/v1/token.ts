@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {generate as randomString} from "randomstring";
 import {v4 as uuid} from "uuid";
 import db from "../../util/db";
-import config from "../../../config.json";
+import {CODE_LIFESPAN, TOKEN_LIFESPAN} from "../../const";
 
 export default async (req: Request, res: Response) => {
 	if (typeof req.body.grant_type !== "string")
@@ -27,7 +27,7 @@ export default async (req: Request, res: Response) => {
 			return res.status(400).json({err: "codeNotForApplication"});
 		if (
 			code.used ||
-			new Date().getTime() > code.createdAt.getTime() + config.codeLifespan
+			new Date().getTime() > code.createdAt.getTime() + CODE_LIFESPAN
 		)
 			return res.status(400).json({err: "codeExpired"});
 		if (code.redirectUri !== req.body.redirect_uri)
@@ -41,7 +41,7 @@ export default async (req: Request, res: Response) => {
 			refresh_token: token.refresh,
 			token_type: "Bearer",
 			scope: token.scopes.join(" "),
-			expires_in: config.tokenLifespan / 1000,
+			expires_in: TOKEN_LIFESPAN / 1000,
 			user: token.userId
 		});
 	}
@@ -62,10 +62,7 @@ export default async (req: Request, res: Response) => {
 			return res.status(400).json({err: "tokenNotForApplication"});
 		if (oldToken.expired)
 			return res.status(400).json({err: "refreshTokenExpired"});
-		if (
-			new Date().getTime() <
-			oldToken.createdAt.getTime() + config.tokenLifespan
-		)
+		if (new Date().getTime() < oldToken.createdAt.getTime() + TOKEN_LIFESPAN)
 			return res.status(400).json({err: "accessTokenNotExpired"});
 
 		//Create new token
@@ -80,7 +77,7 @@ export default async (req: Request, res: Response) => {
 			refresh_token: token.refresh,
 			token_type: "Bearer",
 			scope: token.scopes.join(" "),
-			expires_in: config.tokenLifespan / 1000,
+			expires_in: TOKEN_LIFESPAN / 1000,
 			user: token.userId
 		});
 	}
