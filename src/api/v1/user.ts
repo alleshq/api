@@ -1,6 +1,7 @@
-const db = require("../../util/db");
+import db from "../../util/db";
+import {Request, Response} from "express";
 
-module.exports = async (req, res) => {
+export default async (req: Request, res: Response) => {
 	var searchWithUsername;
 	if (typeof req.query.id === "string") {
 		searchWithUsername = false;

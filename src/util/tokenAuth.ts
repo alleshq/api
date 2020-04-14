@@ -1,6 +1,7 @@
-const db = require("../util/db");
+import db from "../util/db";
+import {Request, Response, NextFunction} from "express";
 
-module.exports = async (req, res, next) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
 	//Parse Header
 	const authHeader = req.headers.authorization;
 	if (typeof authHeader !== "string")
