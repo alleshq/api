@@ -2,7 +2,7 @@
 	"scripts": {
 		"format": "prettier --write \"**/*.+(ts|tsx|json)\"",
 		"build": "rimraf dist && tsc -p tsconfig.json",
-		"start": "node dist/src/index.js"
+		"start": "node dist/index.js"
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
