@@ -1,4 +1,4 @@
-const db = require("../util/db");
+import db from "../util/db"
 
 module.exports = async (req, res, next) => {
 	//Get Credentials

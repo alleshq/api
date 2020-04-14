@@ -1,4 +1,4 @@
-const config = require("../../config");
+import config from "../../../config.json"
 
 module.exports = (req, res) => {
 	res.json({

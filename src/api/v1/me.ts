@@ -1,5 +1,5 @@
 module.exports = async (req, res) => {
-	const responseData = {
+	const responseData: any = {
 		id: req.user.id,
 		username: req.user.username,
 		name: req.user.name,

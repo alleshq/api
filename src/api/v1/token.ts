@@ -1,7 +1,7 @@
-const db = require("../../util/db");
-const config = require("../../config");
-const randomString = require("randomstring").generate;
-const uuid = require("uuid/v4");
+import {generate as randomString} from "randomstring"
+import {v4 as uuid} from "uuid";
+import db from "../../util/db"
+import config from "../../../config.json"
 
 module.exports = async (req, res) => {
 	if (typeof req.body.grant_type !== "string")

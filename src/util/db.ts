@@ -1,9 +1,9 @@
-const credentials = require("../credentials");
-const Sequelize = require("sequelize");
-const models = require("coredb-models");
+import {Sequelize} from "sequelize";
+import models from "coredb-models";
+import credentials from "../../credentials.json"
 
 //Create Instance
-const sequelize = new Sequelize(
+const sequelize: any = new Sequelize(
 	credentials.db.name,
 	credentials.db.username,
 	credentials.db.password,
@@ -16,5 +16,7 @@ const sequelize = new Sequelize(
 		}
 	}
 );
+
 models(sequelize);
-module.exports = sequelize;
+
+export default sequelize;
