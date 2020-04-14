@@ -1,4 +1,3 @@
-/// <reference path="./index.d.ts" />
 import express, {Response, NextFunction, Request} from "express";
 import bodyParser from "body-parser";
 import db from "./util/db";
@@ -15,7 +14,7 @@ db.sync().then(() => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use((err, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 	res.status(500).json({err: "internalError"});
 });
 

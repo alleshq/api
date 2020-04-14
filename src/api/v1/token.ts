@@ -88,7 +88,7 @@ export default async (req: Request, res: Response) => {
 	return res.status(400).json({err: "invalidGrantType"});
 };
 
-const newToken = async (application, user, scopes: string[]) => {
+const newToken = async (application: any, user: any, scopes: string[]) => {
 	const token = await db.AuthToken.create({
 		id: uuid(),
 		scopes,
