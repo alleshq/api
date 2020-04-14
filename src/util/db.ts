@@ -1,6 +1,6 @@
 import {Sequelize} from "sequelize";
 import models from "coredb-models";
-import credentials from "../../credentials.json"
+import credentials from "../../credentials.json";
 
 //Create Instance
 const sequelize: any = new Sequelize(

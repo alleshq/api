@@ -1,6 +1,7 @@
-import express from "express"
-import bodyParser from "body-parser"
-import db from "./util/db"
+/// <reference path="./index.d.ts" />
+import express from "express";
+import bodyParser from "body-parser";
+import db from "./util/db";
 
 const app = express();
 
@@ -10,7 +11,7 @@ db.sync().then(() => {
 	});
 });
 
-app.use(bodyParser.json({extended: false}));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use((err, req, res, next) => {
