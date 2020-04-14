@@ -1,6 +1,6 @@
 import config from "../../../config.json";
 
-module.exports = (req, res) => {
+export default (req, res) => {
 	res.json({
 		user: req.user.id,
 		application: req.token.application,

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 
-module.exports = async (req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
 	const responseData: any = {
 		id: req.user.id,
 		username: req.user.username,

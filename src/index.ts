@@ -1,7 +1,8 @@
 /// <reference path="./index.d.ts" />
-import express from "express";
+import express, { Response, NextFunction, Request } from "express";
 import bodyParser from "body-parser";
 import db from "./util/db";
+import v1 from "./api/v1"
 
 const app = express();
 
@@ -14,13 +15,13 @@ db.sync().then(() => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use((err, req, res, next) => {
+app.use((err, req: Request, res: Response, next: NextFunction) => {
 	res.status(500).json({err: "internalError"});
 });
 
-app.get("/", (req, res) => res.send("Hello World!"));
-app.use("/v1", require("./api/v1/_"));
+app.get("/", (_, res: Response) => res.send("Hello World!"));
+app.use("/v1", v1);
 
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
 	res.status(404).json({err: "invalidRoute"});
 });

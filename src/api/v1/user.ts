@@ -1,6 +1,6 @@
 import db from "../../util/db";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	var searchWithUsername;
 	if (typeof req.query.id === "string") {
 		searchWithUsername = false;

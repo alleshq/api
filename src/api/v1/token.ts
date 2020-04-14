@@ -3,7 +3,7 @@ import {v4 as uuid} from "uuid";
 import db from "../../util/db";
 import config from "../../../config.json";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	if (typeof req.body.grant_type !== "string")
 		return res.status(400).json({err: "invalidBodyParams"});
 
