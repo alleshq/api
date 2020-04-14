@@ -3,27 +3,15 @@ import {Request, NextFunction, Response} from "express";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
 	//Get Credentials
-	var applicationCredentials;
+	let applicationCredentials: {id: string; secret: string};
 	const authHeader = req.headers.authorization;
-	if (typeof authHeader === "string") {
-		var credentialsString;
-		if (authHeader.split(" ").length !== 2 || !authHeader.startsWith("Basic "))
-			return res.status(401).json({err: "badAuthorization"});
-		try {
-			credentialsString = Buffer.from(authHeader.split(" ")[1], "base64")
-				.toString()
-				.split(":");
-		} catch (err) {
-			return res.status(401).json({err: "badAuthorization"});
-		}
-		if (credentialsString.length !== 2)
-			return res.status(401).json({err: "badAuthorization"});
 
-		applicationCredentials = {
-			id: credentialsString[0],
-			secret: credentialsString[1]
-		};
-	} else if (
+	//Check that header is string
+	if (typeof authHeader !== "string")
+		return res.status(401).json({err: "badAuthorization"});
+
+	//Check for authorization in body
+	if (
 		typeof req.body.client_id === "string" &&
 		typeof req.body.client_secret === "string"
 	) {
@@ -31,18 +19,37 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			id: req.body.client_id,
 			secret: req.body.client_secret
 		};
-	} else return res.status(401).json({err: "badAuthorization"});
+	} else {
+		// Get authorization from header
+		if (authHeader.split(" ").length !== 2 || !authHeader.startsWith("Basic "))
+			return res.status(401).json({err: "badAuthorization"});
+
+		let credentialsString: string[];
+		try {
+			credentialsString = Buffer.from(authHeader.split(" ")[1], "base64")
+				.toString()
+				.split(":");
+		} catch (err) {
+			return res.status(401).json({err: "badAuthorization"});
+		}
+
+		if (credentialsString.length !== 2)
+			return res.status(401).json({err: "badAuthorization"});
+
+		applicationCredentials = {
+			id: credentialsString[0],
+			secret: credentialsString[1]
+		};
+	}
 
 	//Get Application
 	const application = await db.Application.findOne({
-		where: {
-			id: applicationCredentials.id
-		}
+		where: {id: applicationCredentials.id}
 	});
-	if (!application)
+
+	if (!application || application.secret !== applicationCredentials.secret)
 		return res.status(401).json({err: "invalidApplicationCredentials"});
-	if (application.secret !== applicationCredentials.secret)
-		return res.status(401).json({err: "invalidApplicationCredentials"});
+
 	req.application = application;
 	next();
 };
