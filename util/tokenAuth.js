@@ -14,7 +14,18 @@ module.exports = async (req, res, next) => {
 			access: authHeader.split(" ")[1]
 		}
 	});
-	if (!token) return res.status(401).json({err: "invalidToken"});
+	if (
+		!token ||
+		token.expired ||
+		token.createdAt < new Date().getTime() - config.tokenLifespan
+	)
+		return res.status(401).json({err: "invalidToken"});
+	const application = await token.getApplication();
+	const user = await token.getUser();
+	if (!application || !user) return res.status(401).json({err: "invalidToken"});
+	const team = await application.getTeam();
+	if (!team || !team.developer)
+		return res.status(401).json({err: "invalidToken"});
 
 	req.token = token;
 	req.user = await token.getUser();
