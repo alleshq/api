@@ -6,14 +6,5 @@ module.exports = async (req, res) => {
 		nickname: req.user.nickname
 	};
 
-	//Team List
-	if (req.token.scopes.includes("teams")) {
-		responseData.teams = (await req.user.getTeams()).map(team => ({
-			id: team.id,
-			slug: team.slug,
-			name: team.name
-		}));
-	}
-
 	res.json(responseData);
 };
