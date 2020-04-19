@@ -36,13 +36,10 @@ module.exports = async (req, res, next) => {
 	const application = await db.Application.findOne({
 		where: {
 			id: applicationCredentials.id
-		},
-		include: ["team"]
+		}
 	});
 	if (
 		!application ||
-		!application.team ||
-		!application.team.developer ||
 		application.secret !== applicationCredentials.secret
 	)
 		return res.status(401).json({err: "invalidApplicationCredentials"});

@@ -23,11 +23,9 @@ module.exports = async (req, res, next) => {
 	const application = await token.getApplication();
 	const user = await token.getUser();
 	if (!application || !user) return res.status(401).json({err: "invalidToken"});
-	const team = await application.getTeam();
-	if (!team || !team.developer)
-		return res.status(401).json({err: "invalidToken"});
 
 	req.token = token;
-	req.user = await token.getUser();
+	req.user = user;
+	req.application = application;
 	next();
 };
