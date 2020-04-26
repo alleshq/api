@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
 		id: user.id,
 		username: user.username,
 		name: user.name,
-		nickname: user.nickname
+		nickname: user.nickname,
+		plus: user.plus
 	});
 };
