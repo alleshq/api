@@ -1,4 +1,5 @@
 const db = require("../util/db");
+const config = require("../config");
 
 module.exports = async (req, res, next) => {
 	//Parse Header
