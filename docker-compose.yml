@@ -5,4 +5,4 @@ services:
     build: .
     restart: always
     ports:
-      - 8003:8081
+      - 127.0.0.1:8003:8081
