@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 		return res.status(400).json({err: "invalidQueryParameters"});
 	}
 
-	//Get User
+	// Get User
 	const user = await db.User.findOne({
 		where: {
 			[searchWithUsername ? "username" : "id"]: searchWithUsername
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
 	});
 	if (!user) return res.status(400).json({err: "invalidUser"});
 
-	//Response
+	// Response
 	res.json({
 		id: user.id,
 		username: user.username,

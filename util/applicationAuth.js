@@ -1,7 +1,7 @@
 const db = require("./db");
 
 module.exports = async (req, res, next) => {
-	//Get Credentials
+	// Get Credentials
 	var applicationCredentials;
 	const authHeader = req.headers.authorization;
 	if (typeof authHeader === "string") {
@@ -32,7 +32,7 @@ module.exports = async (req, res, next) => {
 		};
 	} else return res.status(401).json({err: "badAuthorization"});
 
-	//Get Application
+	// Get Application
 	const application = await db.Application.findOne({
 		where: {
 			id: applicationCredentials.id

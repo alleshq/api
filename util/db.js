@@ -2,7 +2,7 @@ const credentials = require("../credentials");
 const Sequelize = require("sequelize");
 const models = require("coredb-models");
 
-//Create Instance
+// Create Instance
 const sequelize = new Sequelize(
 	credentials.db.name,
 	credentials.db.username,

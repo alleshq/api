@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 		)
 			return res.status(400).json({err: "invalidBodyParams"});
 
-		//Verify Code
+		// Verify Code
 		const code = await db.AuthCode.findOne({
 			where: {
 				code: req.body.code
@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
 		if (code.redirectUri !== req.body.redirect_uri)
 			return res.status(400).json({err: "incorrectRedirectUri"});
 
-		//Create Token
+		// Create Token
 		await code.update({used: true});
 		const token = await newToken(req.application, code.user, code.scopes);
 		res.json({
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
 		if (typeof req.body.refresh_token !== "string")
 			return res.status(400).json({err: "invalidBodyParams"});
 
-		//Verify old token
+		// Verify old token
 		const oldToken = await db.AuthToken.findOne({
 			where: {
 				refresh: req.body.refresh_token
@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
 		)
 			return res.status(400).json({err: "accessTokenNotExpired"});
 
-		//Create new token
+		// Create new token
 		await oldToken.update({expired: true});
 		const token = await newToken(
 			req.application,
