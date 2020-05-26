@@ -38,10 +38,7 @@ module.exports = async (req, res, next) => {
 			id: applicationCredentials.id
 		}
 	});
-	if (
-		!application ||
-		application.secret !== applicationCredentials.secret
-	)
+	if (!application || application.secret !== applicationCredentials.secret)
 		return res.status(401).json({err: "invalidApplicationCredentials"});
 	req.application = application;
 	next();
