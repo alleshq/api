@@ -1,8 +1,0 @@
-version: "3.4"
-
-services:
-  main:
-    build: .
-    restart: always
-    ports:
-      - 127.0.0.1:8003:8081
