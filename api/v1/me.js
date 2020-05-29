@@ -1,5 +1,6 @@
 module.exports = async (req, res) => {
-	const responseData = {
+	// Base data
+	const user = {
 		id: req.user.id,
 		username: req.user.username,
 		name: req.user.name,
@@ -7,5 +8,18 @@ module.exports = async (req, res) => {
 		plus: req.user.plus
 	};
 
-	res.json(responseData);
+	// Primary Account
+	if (req.token.scopes.includes("primary")) {
+		const primary = await req.user.getPrimary();
+		user.primary = primary
+			? {
+					id: primary.id,
+					name: primary.name,
+					username: primary.username
+			  }
+			: null;
+	}
+
+	// Response
+	res.json(user);
 };
